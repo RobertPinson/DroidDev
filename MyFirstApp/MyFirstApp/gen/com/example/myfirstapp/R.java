@@ -24,7 +24,9 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080005;
+        public static final int action_settings=0x7f080007;
+        public static final int bill_ammount=0x7f080006;
+        public static final int bill_name=0x7f080005;
         public static final int bill_total=0x7f080000;
         public static final int edit_message=0x7f080001;
         public static final int edit_splitby=0x7f080003;
@@ -34,6 +36,7 @@ public final class R {
     public static final class layout {
         public static final int activity_display_message=0x7f030000;
         public static final int activity_main=0x7f030001;
+        public static final int bill_row=0x7f030002;
     }
     public static final class menu {
         public static final int display_message=0x7f070000;

@@ -1,7 +1,9 @@
 package com.example.myfirstapp;
 
 import java.util.ArrayList;
-
+import java.util.Currency;
+import java.util.Locale;
+import java.math.BigDecimal;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,27 +16,10 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		final ListView listview = (ListView) findViewById(R.id.listview_bills);
-	    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-	        "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-	        "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
-	        "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
-	        "Android", "iPhone", "WindowsMobile" };
-
-	    final ArrayList<String> list = new ArrayList<String>();
-	    for (int i = 0; i < values.length; ++i) {
-	      list.add(values[i]);
-	    }
-	    final ArrayAdapter adapter = new ArrayAdapter(this,
-	        android.R.layout.simple_list_item_1, list);
-	    listview.setAdapter(adapter);
 	}
 
 	@Override
@@ -54,6 +39,8 @@ public class MainActivity extends Activity {
 			}
 
 			splitBy.setText(String.format("%02d", split));
+
+			SplitBill(split);
 		} catch (NumberFormatException nfe) {
 			System.out.println("Could not parse " + nfe);
 		}
@@ -69,9 +56,31 @@ public class MainActivity extends Activity {
 			}
 
 			splitBy.setText(String.format("%02d", split));
+			SplitBill(split);
 		} catch (NumberFormatException nfe) {
 			System.out.println("Could not parse " + nfe);
 		}
 	}
 
+	private void SplitBill(int split) {
+		final ListView listview = (ListView) findViewById(R.id.listview_bills);
+		final EditText billTotal = (EditText) findViewById(R.id.edit_message);
+		BigDecimal total = new BigDecimal(billTotal.getText().toString());
+
+		Money money = MoneyMaker.makeMoney(Currency.getInstance(Locale.UK),
+				total);
+		Money[] bills = money.proRate(split);
+
+		ArrayList<BillItem> billList = new ArrayList<BillItem>();
+		int index = 0;
+		for (Money bill : bills) {
+			index++;
+			billList.add(new BillItem(String.format("Bill %01d", index), bill
+					.value().toString()));
+		}
+
+		final SplitBillAdapter adapter = new SplitBillAdapter(this, billList);
+
+		listview.setAdapter(adapter);
+	}
 }
