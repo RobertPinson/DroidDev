@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:hint="00.00"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+       />
 
     <LinearLayout
         android:id="@+id/layout_splitby"
@@ -66,6 +67,7 @@
         android:id="@+id/listview_bills"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_splitby" />
+        android:layout_below="@id/layout_splitby" 
+        android:minHeight="50dp" />
 
 </RelativeLayout>

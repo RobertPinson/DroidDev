@@ -63,15 +63,24 @@ public class MainActivity extends Activity {
 	}
 
 	private void SplitBill(int split) {
+		final SplitBillAdapter adapter;
 		final ListView listview = (ListView) findViewById(R.id.listview_bills);
 		final EditText billTotal = (EditText) findViewById(R.id.edit_message);
+		ArrayList<BillItem> billList = new ArrayList<BillItem>();
+
+		if (split <= 0) {
+
+			adapter = new SplitBillAdapter(this, billList);
+			listview.setAdapter(adapter);
+			return;
+		}
+
 		BigDecimal total = new BigDecimal(billTotal.getText().toString());
 
 		Money money = MoneyMaker.makeMoney(Currency.getInstance(Locale.UK),
 				total);
 		Money[] bills = money.proRate(split);
 
-		ArrayList<BillItem> billList = new ArrayList<BillItem>();
 		int index = 0;
 		for (Money bill : bills) {
 			index++;
@@ -79,8 +88,7 @@ public class MainActivity extends Activity {
 					.value().toString()));
 		}
 
-		final SplitBillAdapter adapter = new SplitBillAdapter(this, billList);
-
+		adapter = new SplitBillAdapter(this, billList);
 		listview.setAdapter(adapter);
 	}
 }
