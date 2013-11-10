@@ -9,13 +9,15 @@ android:orientation="horizontal" >
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:paddingLeft="10dp"
-    android:gravity = "left">"
+    android:gravity = "left"
+    android:textSize="20sp">
 </TextView>
 
 <TextView
     android:id="@+id/bill_ammount"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="right" >
+    android:gravity="right" 
+    android:textSize="20sp">
 </TextView>
 </LinearLayout>
